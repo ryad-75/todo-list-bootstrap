@@ -3,7 +3,7 @@ import {v1 as uuid} from "uuid";
 import AddTodoForm from './AddTodoForm';
 
 
-const Todo = () => {
+const Todo = (id) => {
 
     const [todos, setTodos] = useState([
         {id: 1, todo: 'Acheter du lait'},
@@ -11,11 +11,19 @@ const Todo = () => {
         {id: 3, todo: 'Acheter du fromage'}
     ])
 
+    const removeTodo = todoId => {
+        const updatedTodos = todos.filter(todo => todo.id !== todoId);
+        setTodos(updatedTodos);
+    };
+
     const [warning, setWarning] = useState(false)
 
     const myTodos = todos.map( todo => {
+
         return(
-        <li className="list-group-item" key={todo.id}>{todo.todo}</li>
+        <li className="list-group-item" key={todo.id}>{todo.todo}
+        <span className="btn btn-danger btn-sm float-right" onClick={() => removeTodo(todo.id)}>x</span>
+        </li>
         )
     })
 
@@ -24,7 +32,7 @@ const Todo = () => {
         if(newTodo !== '') {
 
             warning && setWarning(false)
-            
+
             setTodos([...todos, {
                 id: uuid(),
                 todo: newTodo
@@ -41,11 +49,12 @@ const Todo = () => {
     return (
         <div>
             {warningMsg}
-            <h1 className="text-center" > {todos.length}To-do</h1>
+            <h1 className="text-center" >{todos.length} To-do</h1>
 
             <ul className="list-group">
-                {myTodos}
-                <AddTodoForm addNewTodo={addNewTodo} />
+                {myTodos} 
+                <AddTodoForm addNewTodo={addNewTodo}  />
+                
             </ul>
         </div>
     )
