@@ -3,7 +3,7 @@ import {v1 as uuid} from "uuid";
 import AddTodoForm from './AddTodoForm';
 
 
-const Todo = (id) => {
+const Todo = () => {
 
     const [todos, setTodos] = useState([
         {id: 1, todo: 'Acheter du lait'},
